@@ -32,7 +32,7 @@ for i = (1+start):size(img,3)
     
     
     imagen = imgaussfilt(imagen, 10);
-    [y_max, x_max] = find(imagen == max(max(imagen)));
+    [y_max x_max] = find(imagen == max(max(imagen)));
     [valores_maximos, x] = findpeaks(imagen(y_max, 110:940));
     y = y_max*ones(1, size(x, 2));
     x = x + 110;
@@ -46,7 +46,7 @@ for i = (1+start):size(img,3)
     
     ancho = x(n)-x(n-1);
     for j = 1:size(x, 2)
-       [valores_maximos(j), x(j), y(j)] = loc_maximo(imagen, x(j), ancho); 
+       [valores_maximos(j) x(j) y(j)] = loc_maximo(imagen, x(j), ancho); 
     end
     subplot(1, 2, 2);
     hold on;
@@ -81,21 +81,19 @@ for i = 1:size(X,2)
 end
 
 %d=129.1456 viejo, esta mal
-d = 12.9146;%um
+d = 12.9146
 %d=medir_distancia_rendija(); %um
-px_a_mm = 0.0496;%mm/px
-%px_a_mm = paralaje();%mm/px
+px_a_mm = paralaje();%mm/px
 L=540;%mm
 
 n = find(valores_maximos == max(valores_maximos));
 cantidad_de_maximos = n-1;
-distancia_entre_maximos = mean(diff(x(1:end)));%(mx(end)-mx(1))/(size(mx, 2)-1) %cantidad_de_maximos;
-distancia_entre_maximos = distancia_entre_maximos*px_a_mm; % arreglar
+%distancia_entre_maximos = mean(diff(x(1:end)));%(mx(end)-mx(1))/(size(mx, 2)-1) %cantidad_de_maximos;
+%distancia_entre_maximos = distancia_entre_maximos*0.0491 % arreglar
 
-%distancia_entre_maximos = x(end)-x(1);
-%distancia_entre_maximos = distancia_entre_maximos/cantidad_de_maximos;
-%distancia_entre_maximos = distancia_entre_maximos*px_a_mm;
+distancia_entre_maximos = x(end)-x(1);
+distancia_entre_maximos = distancia_entre_maximos/cantidad_de_maximos;
+distancia_entre_maximos = distancia_entre_maximos*px_a_mm;
 
-lambda = d*(distancia_entre_maximos/L);%um
-lambda = lambda*1000%paso a nm
+lambda = d*(distancia_entre_maximos/L) % arreglar d
 %end
